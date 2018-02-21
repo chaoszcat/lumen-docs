@@ -22,17 +22,16 @@ In order to use the `database` queue driver, you will need database tables to ho
 
     Schema::create('jobs', function (Blueprint $table) {
         $table->bigIncrements('id');
-        $table->string('queue');
+        $table->string('queue')->index();
         $table->longText('payload');
-        $table->tinyInteger('attempts')->unsigned();
+        $table->unsignedTinyInteger('attempts');
         $table->unsignedInteger('reserved_at')->nullable();
         $table->unsignedInteger('available_at');
         $table->unsignedInteger('created_at');
-        $table->index(['queue', 'reserved_at']);
     });
 
     Schema::create('failed_jobs', function (Blueprint $table) {
-        $table->increments('id');
+        $table->bigIncrements('id');
         $table->text('connection');
         $table->text('queue');
         $table->longText('payload');
